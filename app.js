@@ -36,6 +36,8 @@
   }
 
   function drawGrid () {
+    personData = upsetData();
+
     let totalPerson = personData.length;
     let multiple = Math.ceil(Math.sqrt(totalPerson / (2 * 1)));
 
@@ -67,8 +69,7 @@
   }
 
   function renderCards () {
-    let newPersonData = upsetData();
-    let totalPerson = newPersonData.length;
+    let totalPerson = personData.length;
     let idx = 0;
 
     let liter = setInterval(() => {
@@ -79,8 +80,8 @@
       } else {
         let card = $('.card[data-id="'+ idx +'"]')[0];
         if (totalPerson > idx) {
-          card.innerHTML = `<div class="avatar"><img src="${ newPersonData[idx].avatar }"></div>
-                            <div class="name">${ newPersonData[idx].name }</div>
+          card.innerHTML = `<div class="avatar"><img src="${ personData[idx].avatar }"></div>
+                            <div class="name">${ personData[idx].name }</div>
                             <div class="id"></div>`;
         } else {
           cards.classList.add('hide');
@@ -132,7 +133,7 @@
         resultPersonsEl.innerHTML = _html;
         
         removeWinnersFromData(winners);
-      }, 500);
+      }, 1000);
 
     }, 5000);
   }
@@ -155,7 +156,7 @@
     while (arr.length < number) {
         var randomNumber = Math.floor(Math.random() * totalPerson);
         if (arr.indexOf(randomNumber) > -1) {
-          continue
+          continue;
         };
 
         arr[arr.length] = randomNumber;
@@ -170,7 +171,7 @@
     while (tempArr.length < arr.length) {
       var randomNumber = Math.floor(Math.random() * arr.length);
       if (tempArr.indexOf(arr[randomNumber]) > -1) {
-        continue
+        continue;
       };
 
       tempArr.push(arr[randomNumber]);
