@@ -4,6 +4,9 @@
 
   attachEvent();
 
+  // 测试
+  // fetchData();
+
   function attachEvent () {
     $('#start')[0].addEventListener('click', (e) => {
       let number = $('#number')[0].value;
@@ -65,7 +68,8 @@
 
     cardsEl.innerHTML = cards;
 
-    renderCards();
+    // renderCards();
+    renderCardsV2();
   }
 
   function renderCards () {
@@ -80,7 +84,7 @@
       } else {
         let card = $('.card[data-id="'+ idx +'"]')[0];
         if (totalPerson > idx) {
-          card.innerHTML = `<div class="avatar"><img src="${ personData[idx].avatar }"></div>
+          card.innerHTML = `<div class="avatar"><img src="${ personData[idx].avatar }" /></div>
                             <div class="name">${ personData[idx].name }</div>
                             <div class="id"></div>`;
         } else {
@@ -90,6 +94,46 @@
 
       idx++;
     }, 50);
+  }
+
+  function renderCardsV2 () {
+    let totalPerson = personData.length;
+    let idx = 0;
+
+    let liter = setInterval(() => {
+      let deal = $('#deal')[0];
+
+      if (idx === totalCells) {
+        fire();
+        clearInterval(liter);
+        deal.innerHTML = `<p></p>`;
+        return false;
+      } else {
+        if (totalPerson > idx) {
+          let card = $('.card[data-id="'+ idx +'"]')[0];
+          let offset = card.getBoundingClientRect();
+          let dealInnerEl = deal.querySelector('p');
+
+          dealInnerEl.style.transform = `translate(${ offset.x - dealInnerEl.getBoundingClientRect().x }px, ${ offset.y - dealInnerEl.getBoundingClientRect().y }px)`;
+
+          card.innerHTML = `<div class="avatar"><img src="${ personData[idx].avatar }"></div>
+                            <div class="name">${ personData[idx].name }</div>
+                            <div class="id"></div>`;
+                            
+          setTimeout(() => {
+            if (personData[idx]) {
+              deal.innerHTML = `<p><img src="${ personData[idx].avatar }" /></p>`;
+            } else {
+              deal.innerHTML = `<p></p>`;
+            }
+          }, 50)
+        } else {
+          cards.classList.add('hide');
+        }
+      }
+
+      idx++;
+    }, 100);
   }
 
   function fire () {

@@ -7,6 +7,32 @@ body {
     overflow: hidden hidden;
 }
 
+header {
+  height: 0;
+  margin-bottom: 3rem;
+}
+
+header #deal {
+  position: absolute;
+  top: -3.5rem;
+  left: calc(50% - 3rem);
+  width: 6rem;
+  height: 6rem;
+  background-color: #FFF;
+  border-radius: 3rem;
+}
+
+header #deal p {
+  transition: transform .1s;
+  margin: 0;
+}
+
+header #deal img {
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 3rem;
+}
+
 #app {
   color: #FFFFFF;
   height: 100%;
@@ -89,6 +115,10 @@ a {
   padding: 1rem 1.2rem;
   font-weight: normal;
 }
+
+/* #settings {
+  display: none;
+} */
 
 #result {
   display: none;
