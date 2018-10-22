@@ -106,11 +106,11 @@
       let number = $('#number')[0].value;
       let prize = $('#prizes')[0].value;
 
-      let result = getResult(number);
+      let winners = getWinners(number);
       clearInterval(liter);
       reset();
 
-      for (let r of result) {
+      for (let r of winners) {
         $('.card[data-id="'+ r +'"]')[0].classList.add('highlight');
       }
 
@@ -121,7 +121,7 @@
         
         $('#result')[0].style.display = 'block';
 
-        for (let r of result) {
+        for (let r of winners) {
           _html += `<div>
                       <span class="avatar" style="background: url(${ personData[r].avatar }); background-size: cover;"></span>
                       <span class="name">${ personData[r].name }</span>
@@ -130,6 +130,8 @@
 
         prizeEl.innerHTML = prize;
         resultPersonsEl.innerHTML = _html;
+        
+        removeWinnersFromData(winners);
       }, 500);
 
     }, 5000);
@@ -142,20 +144,52 @@
   }
 
   function upsetData () {
-    return personData;
+    return randomArr(personData);
   }
 
-  function getResult (num) {
+  function getWinners (number) {
     let arr = [];
     let totalPerson = personData.length;
+    number = (number < totalPerson) ? number : totalPerson;
 
-    while(arr.length < num){
+    while (arr.length < number) {
         var randomNumber = Math.floor(Math.random() * totalPerson);
-        if(arr.indexOf(randomNumber) > -1) continue;
+        if (arr.indexOf(randomNumber) > -1) {
+          continue
+        };
+
         arr[arr.length] = randomNumber;
     }
 
     return arr;
+  }
+
+  function randomArr (arr) {
+    let tempArr = [];
+
+    while (tempArr.length < arr.length) {
+      var randomNumber = Math.floor(Math.random() * arr.length);
+      if (tempArr.indexOf(arr[randomNumber]) > -1) {
+        continue
+      };
+
+      tempArr.push(arr[randomNumber]);
+    }
+
+    return tempArr;
+  }
+
+  function removeWinnersFromData (winners) {
+    // Sort winners by index desc
+    winners.sort((a, b) => (b - a));
+
+    let personCountBefore = personData.length;
+
+    for (let w of winners) {
+      personData.splice(w, 1);
+    }
+
+    console.table({'总人数（中奖前）': personCountBefore, '总人数（中奖后）': personData.length, '中奖人': winners});
   }
 })(window, (sel) => {
   return document.querySelectorAll(sel);
