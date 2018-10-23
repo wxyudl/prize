@@ -6,6 +6,14 @@
   attachEvent();
   fetchData();
 
+  window.onload = function () {
+    let startBtn = $('#start')[0];
+    isFetchingData = false;
+
+    startBtn.innerHTML = '开始抽奖';
+    startBtn.classList.remove('disabled');
+  }
+
   function attachEvent () {
     let startBtn = $('#start')[0];
 
@@ -27,8 +35,6 @@
   }
 
   function fetchData () {
-    let startBtn = $('#start')[0];
-
     if (personData.length === 0) {
       fetch('./person.json').then((res, rej) => {
         return res.json();
@@ -36,18 +42,18 @@
         loadImages(res)
 
         personData = res;
-        isFetchingData = false;
-
-        startBtn.innerHTML = '开始抽奖';
-        startBtn.classList.remove('disabled');
       })
     }
   }
 
   function loadImages (data) {
+    let tmpEl = $('#tmp')[0];
+
     for (let d of data) {
       let img = new Image();
       img.src  = d.avatar;
+
+      tmpEl.appendChild(img);
     }
   }
 

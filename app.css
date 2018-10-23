@@ -162,3 +162,11 @@ a {
   margin: 0;
   color: #009688;
 }
+
+#tmp {
+  display: none;
+  height: 0;
+  width: 0;
+  overflow: hidden;
+  opacity: 0;
+}
