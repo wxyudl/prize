@@ -55,6 +55,8 @@
 
           return;
         }
+
+        startBtn.innerHTML = `加载头像中 ... (${ count } / ${ data.length })`;
         
         count++;
       }
