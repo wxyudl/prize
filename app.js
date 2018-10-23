@@ -1,19 +1,20 @@
 ;(function (window, $) {
   let personData = [];
   let totalCells = 0;
+  let isFetchingData = true;
 
   attachEvent();
-
-  // 测试
-  // fetchData();
+  fetchData();
 
   function attachEvent () {
-    $('#start')[0].addEventListener('click', (e) => {
+    let startBtn = $('#start')[0];
+
+    startBtn.addEventListener('click', (e) => {
       let number = $('#number')[0].value;
 
-      if (number.trim()) {
+      if (number.trim() && !isFetchingData) {
         $('#settings')[0].style.display = 'none';
-        fetchData();
+        drawGrid();
       }
     });
 
@@ -26,15 +27,27 @@
   }
 
   function fetchData () {
-    if (personData.length) {
-      drawGrid();
-    } else {
+    let startBtn = $('#start')[0];
+
+    if (personData.length === 0) {
       fetch('./person.json').then((res, rej) => {
         return res.json();
       }).then((res, rej) => {
+        loadImages(res)
+
         personData = res;
-        drawGrid();
+        isFetchingData = false;
+
+        startBtn.innerHTML = '开始抽奖';
+        startBtn.classList.remove('disabled');
       })
+    }
+  }
+
+  function loadImages (data) {
+    for (let d of data) {
+      let img = new Image();
+      img.src  = d.avatar;
     }
   }
 

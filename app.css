@@ -116,6 +116,10 @@ a {
   font-weight: normal;
 }
 
+#settings section button.disabled {
+  background-color: #DDDDDD;
+}
+
 /* #settings {
   display: none;
 } */
