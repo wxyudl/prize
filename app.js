@@ -6,14 +6,6 @@
   attachEvent();
   fetchData();
 
-  window.onload = function () {
-    let startBtn = $('#start')[0];
-    isFetchingData = false;
-
-    startBtn.innerHTML = '开始抽奖';
-    startBtn.classList.remove('disabled');
-  }
-
   function attachEvent () {
     let startBtn = $('#start')[0];
 
@@ -48,10 +40,24 @@
 
   function loadImages (data) {
     let tmpEl = $('#tmp')[0];
+    let startBtn = $('#start')[0];
+    let count = 1;
 
     for (let d of data) {
       let img = new Image();
       img.src  = d.avatar;
+
+      img.onload = function () {
+        if (count === data.length) {
+          isFetchingData = false;
+          startBtn.innerHTML = '开始抽奖';
+          startBtn.classList.remove('disabled');
+
+          return;
+        }
+        
+        count++;
+      }
 
       tmpEl.appendChild(img);
     }
