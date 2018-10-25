@@ -34,7 +34,10 @@
         loadImages(res)
 
         personData = res;
+        // localStorage.setItem('personData', JSON.stringify(personData));
       })
+    } else {
+      // localStorage.setItem('personData', JSON.stringify(personData));
     }
   }
 
@@ -261,6 +264,7 @@
       personData.splice(w, 1);
     }
 
+    localStorage.setItem('personData', JSON.stringify(personData));
     console.table({'总人数（中奖前）': personCountBefore, '总人数（中奖后）': personData.length, '中奖人': winners});
   }
 })(window, (sel) => {
